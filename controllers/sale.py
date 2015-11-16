@@ -1,5 +1,6 @@
 # -*- coding: utf-8 -*-
 # try something like
+@auth.requires_login()
 def index(): 
     response.title = "Sales"
     query = db(db.sale.id != 0)
