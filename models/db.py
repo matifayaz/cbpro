@@ -90,3 +90,20 @@ auth.settings.reset_password_requires_verification = True
 
 ## after defining tables, uncomment below to enable auditing
 # auth.enable_record_versioning(db)
+
+db.define_table('sale',
+    Field('first_name', label='First Name', type='string', length=64, requires=IS_LENGTH(64, 3)),
+    Field('last_name', label='Last Name', type='string', length=64, requires=IS_LENGTH(64, 3)),
+    Field('company_name', label='Company', type='string', length=64),
+    Field('address', label='Address', type='text'),
+    Field('email', label='Email', type='string', length=64, requires = IS_EMAIL(error_message='Invalid email')),
+    Field('primary_phone_no', label='Primary Contact Number', type='string', length=20, requires=IS_NOT_EMPTY()),
+    Field('other_phone_no', label='Other Contact Number', type='string', length=20),
+    Field('amount', label='Amount', type='double', requires=IS_DECIMAL_IN_RANGE(0, 99999, dot=".", error_message='Enter valid value for amount')),
+    auth.signature)
+
+db.define_table('material',
+        Field('item'),
+        Field('price'),
+        Field('sale_id','reference sale'))
+
