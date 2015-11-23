@@ -13,6 +13,28 @@
 
         <div class="table-responsive">
 
+          <table id="mytable" class="table table-bordred table-striped">
+            <thead style="background-color: #D3D5F0;">
+                <th>{{=T("%(heading)s") % dict(heading="Customer's Name")}}</th>
+                <th>{{=T("%(heading)s") % dict(heading="Company")}}</th>
+                <th>{{=T("%(heading)s") % dict(heading="Phone #")}}</th>
+                <th>{{=T("%(heading)s") % dict(heading="Sale Recorded on")}}</th>
+                <th>{{=T("%(heading)s") % dict(heading="Sale Amount")}}</th>
+            </thead>
+            <tbody>
+            {{for (i,e) in enumerate(sales):}}
+                          {{tr_detail_url = URL('sale','detail', args=[e.id])}}
+              <tr onclick='window.document.location="{{=tr_detail_url}}";'>
+                <td>{{=T("%(value_1)s") % dict(value_1=e.first_name + ' ' + e.last_name)}}</td>
+                <td>{{=T("%(value_2)s") % dict(value_2=e.company_name)}}</td>
+                <td>{{=T("%(value_3)s") % dict(value_3=e.primary_phone_no)}}</td>
+                <td>{{=T("%(value_4)s") % dict(value_4=e.created_on)}}</td>
+                <td>{{=T("%(value_5)s") % dict(value_5=e.amount)}}</td>
+              </tr>
+            {{pass}}
+            </tbody>
+          </table>
+
 
         </div>
 

@@ -7,6 +7,16 @@ def index():
     rows = query.select(db.sale.ALL, orderby =~ db.sale.created_on)
     return dict(sales=rows)
 
+
+@auth.requires_login()
+def detail():
+    response.title = "Sale Detail"
+    sale_id = request.args(0) or 0
+    sale = db(db.sale.id==sale_id).select(db.sale.ALL).first()
+    material = db(db.material.sale_id == sale_id).select(db.material.ALL)
+    return dict(sale=sale, material=material)
+
+
 @auth.requires_login()
 def new():
     form = SQLFORM(db.sale)
