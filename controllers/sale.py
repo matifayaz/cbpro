@@ -3,7 +3,7 @@
 @auth.requires_login()
 def index(): 
     response.title = "Sales"
-    query = db(db.sale.id != 0)
+    query = db(db.sale.created_by == auth.user.id)
     rows = query.select(db.sale.ALL, orderby =~ db.sale.created_on)
     return dict(sales=rows)
 
@@ -14,6 +14,9 @@ def detail():
     sale_id = request.args(0) or 0
     sale = db(db.sale.id==sale_id).select(db.sale.ALL).first()
     material = db(db.material.sale_id == sale_id).select(db.material.ALL)
+    if sale.created_by != auth.user.id:
+        session.flash = 'Unauthorized'
+        return redirect (URL('index'))
     return dict(sale=sale, material=material)
 
 
